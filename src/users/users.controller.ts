@@ -19,7 +19,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  getDUserById(@Param('id', ParseIntPipe) id: number): UsersDto {
+  getDUserById(@Param('id', ParseIntPipe) id: string): UsersDto {
     return this.usersService.findById(Number(id));
   }
   @Post()

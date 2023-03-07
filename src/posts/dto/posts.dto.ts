@@ -2,7 +2,7 @@ import { IsInt, IsOptional, IsString, Length } from 'class-validator';
 
 export class PostsDto {
   @IsInt()
-  id: number;
+  id: string;
 
   @IsString()
   title: string;

@@ -1,64 +1,40 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { CatsDto } from './dto/cats.dto';
-import { UpdateCatDto } from './dto/updateCats.dto';
-
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import { CreateCatDto } from './dto/createCat.dto';
+import { UpdateCatDto } from './dto/updateCat.dto';
+import { CatRepository } from './repository/cats.repository';
+import { v4 as uuid } from 'uuid';
 @Injectable()
 export class CatsService {
-  private cats: CatsDto[] = [
-    {
-      id: 1,
-      name: 'Betina',
-      age: 2,
-      breed: 'Siverian',
-      gender: 'female',
-    },
-    {
-      id: 2,
-      name: 'Bono',
-      age: 11,
-      breed: 'Persian',
-      gender: 'male',
-    },
-    {
-      id: 3,
-      name: 'Hatila',
-      age: 4,
-      breed: 'Siamese',
-      gender: 'female',
-    },
-  ];
+  constructor(private readonly catRepository: CatRepository) {}
 
-  findAll() {
-    return this.cats;
+  getAll() {
+    return this.catRepository.findAll();
   }
 
-  findById(id: number) {
-    const cat = this.cats.find((cat) => cat.id === +id);
-    if (!cat) {
-      throw new NotFoundException(`Cat with id ${id} not found`);
-    }
+  getOne(id: string) {
+    return this.catRepository.findById(id);
+  }
+
+  createCat(createCatDto: CreateCatDto) {
+    const cat = {
+      id: uuid(),
+      ...createCatDto,
+    };
+    this.catRepository.createCat(cat);
+
     return cat;
   }
 
-  createCat(catsDto: CatsDto) {
-    this.cats.push(catsDto);
-
-    return `${catsDto.name} creado con éxito`;
+  update(updateCatDTO: UpdateCatDto, id: string) {
+    const catToUpdate = this.getOne(id);
+    return this.catRepository.update(updateCatDTO, id);
   }
 
-  /*   updateCat(id: number, updateCatDto: UpdateCatDto) {
-    let catDB = this.findById(id);
-
-    this.cats = this.cats.map((cat) => {
-      if (cat.id === id) {
-        catDB = { ...catDB, ...updateCatDto };
-        return cat;
-      }
-    });
-    return catDB;
+  removeCat(id: string) {
+    return this.catRepository.deleteCat(id);
   }
-
-  removeCat(id: number) {
-    this.cats = this.cats.filter((cat) => cat.id !== id);
-  } */
 }

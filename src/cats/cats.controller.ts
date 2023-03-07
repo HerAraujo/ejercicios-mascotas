@@ -3,38 +3,52 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Patch,
   Post,
+  UseFilters,
 } from '@nestjs/common';
-import { CatsDto } from './dto/cats.dto';
 import { CatsService } from './cats.service';
-import { UpdateCatDto } from './dto/updateCats.dto';
+import { CreateCatDto } from './dto/createCat.dto';
+import { UpdateCatDto } from './dto/updateCat.dto';
 
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
+  @Get('/test-error')
+  @UseFilters()
+  test() {
+    throw new HttpException('holo desde aca', HttpStatus.EXPECTATION_FAILED);
+  }
+
   @Get()
-  getCats(): CatsDto[] {
-    return this.catsService.findAll();
+  getCats(): CreateCatDto[] {
+    return this.catsService.getAll();
   }
 
   @Get(':id')
-  getCatById(@Param('id', ParseIntPipe) id: number): CatsDto {
-    return this.catsService.findById(Number(id));
+  getDogById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.catsService.getOne(id);
   }
+
   @Post()
-  createCat(@Body() catsDto: CatsDto) {
+  createCats(@Body() catsDto: CreateCatDto) {
     return this.catsService.createCat(catsDto);
   }
-  /*  @Patch(':id')
-  updateCat(@Param('id', ParseIntPipe) id: number, updateCatDto: UpdateCatDto) {
-    return this.catsService.updateCat(id, updateCatDto);
+  @Patch(':id')
+  updateDog(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCatDto: UpdateCatDto,
+  ): UpdateCatDto {
+    return this.catsService.update(updateCatDto, id);
   }
+
   @Delete(':id')
-  deleteCat(@Param('id', ParseIntPipe) id: number) {
+  deleteDog(@Param('id', ParseUUIDPipe) id: string) {
     return this.catsService.removeCat(id);
-  } */
+  }
 }

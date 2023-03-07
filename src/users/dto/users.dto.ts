@@ -9,9 +9,6 @@ import {
 } from 'class-validator';
 
 export class UsersDto {
-  @IsInt()
-  id: number;
-
   @IsString()
   @Length(3, 10)
   name: string;

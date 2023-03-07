@@ -1,15 +1,11 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
-import { Dogs } from '../entity/dogs.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Dog } from '../entity/dog.entity';
 import { v4 as uuid } from 'uuid';
-import { UpdateDogDto } from '../dto/updateDogs.dto';
+import { UpdateDogDto } from '../dto/updateDog.dto';
 
 @Injectable()
 export class DogRepository {
-  private dogs: Dogs[];
+  private dogs: Dog[];
 
   constructor() {
     this.dogs = [
@@ -53,7 +49,7 @@ export class DogRepository {
     }
   }
 
-  createDog(dog: Dogs) {
+  createDog(dog: Dog) {
     this.dogs.push(dog);
 
     return dog;

@@ -34,7 +34,7 @@ export class PostsService {
     return this.posts;
   }
 
-  findById(id: number) {
+  findById(id: string) {
     const post = this.posts.find((post) => post.id === +id);
     if (!post) {
       throw new NotFoundException(`Post with id ${id} not found`);

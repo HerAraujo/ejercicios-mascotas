@@ -1,7 +1,8 @@
 import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
-export class DogsDto {
+export class UpdateCatDto {
   @IsString()
+  @IsOptional()
   name: string;
 
   @IsString()
@@ -10,9 +11,11 @@ export class DogsDto {
 
   @IsInt()
   @Min(0)
+  @IsOptional()
   age: number;
 
   @IsString()
   @IsIn(['male', 'female'])
+  @IsOptional()
   gender: string;
 }

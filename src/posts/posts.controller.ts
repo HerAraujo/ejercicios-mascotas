@@ -19,7 +19,7 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostById(@Param('id', ParseIntPipe) id: number): PostsDto {
+  getPostById(@Param('id', ParseIntPipe) id: string): PostsDto {
     return this.postsService.findById(Number(id));
   }
   @Post()

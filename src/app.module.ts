@@ -4,6 +4,7 @@ import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AppService } from './app.service';
+import { DatabaseModule } from './common/database/database.module';
 
 @Module({
   imports: [DogsModule, CatsModule, UsersModule, PostsModule],

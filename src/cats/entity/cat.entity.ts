@@ -1,5 +1,5 @@
-export interface Cats {
-  id: number;
+export class Cat {
+  id: string;
   name: string;
   breed: string;
   age: number;

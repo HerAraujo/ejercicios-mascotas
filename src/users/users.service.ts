@@ -30,7 +30,7 @@ export class UsersService {
     return this.users;
   }
 
-  findById(id: number) {
+  findById(id: string) {
     const user = this.users.find((user) => +user.id === +id);
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);

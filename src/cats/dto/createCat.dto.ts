@@ -1,8 +1,6 @@
 import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
-export class CatsDto {
-  @IsInt()
-  id: number;
+export class CreateCatDto {
   @IsString()
   name: string;
 

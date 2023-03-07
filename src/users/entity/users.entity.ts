@@ -1,7 +1,7 @@
-export interface Dogs {
+export class User {
   id: string;
   name: string;
-  breed: string;
   age: number;
   gender: string;
+  email: string;
 }
