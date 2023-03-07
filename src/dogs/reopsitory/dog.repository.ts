@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { Dogs } from '../entity/dogs.entity';
 import { v4 as uuid } from 'uuid';
+import { UpdateDogDto } from '../dto/updateDogs.dto';
 
 @Injectable()
 export class DogRepository {
@@ -54,10 +59,15 @@ export class DogRepository {
     return dog;
   }
 
-  update(updatedDog: Dogs): Dogs {
+  update(updatedDog: UpdateDogDto, id: string): UpdateDogDto {
     try {
       this.dogs.map((dog) => {
-        if (dog.id === updatedDog.id) dog = updatedDog;
+        if (dog.id === id) {
+          (dog.age = updatedDog.age || dog.age),
+            (dog.breed = updatedDog.breed || dog.breed),
+            (dog.gender = updatedDog.gender || dog.gender),
+            (dog.name = updatedDog.name || dog.name);
+        }
       });
       return updatedDog;
     } catch (error) {
@@ -66,9 +76,11 @@ export class DogRepository {
   }
 
   deleteDog(id: string) {
+    const dogToDelete = this.findById(id);
     try {
-      this.dogs = this.dogs.filter((cat) => cat.id !== id);
-      return this.dogs;
+      const newDogsArray = this.dogs.filter((dog) => dog.id !== id);
+      this.dogs = newDogsArray;
+      return dogToDelete;
     } catch (error) {
       throw new Error(error);
     }

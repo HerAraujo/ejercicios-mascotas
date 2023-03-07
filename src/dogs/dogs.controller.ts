@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { DogsService } from './dogs.service';
@@ -26,5 +28,18 @@ export class DogsController {
   @Post()
   createDogs(@Body() dogsDto: DogsDto) {
     return this.dogsService.create(dogsDto);
+  }
+
+  @Patch(':id')
+  updateDog(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dogsDto: DogsDto,
+  ): DogsDto {
+    return this.dogsService.update(dogsDto, id);
+  }
+
+  @Delete(':id')
+  deleteDog(@Param('id', ParseUUIDPipe) id: string) {
+    return this.dogsService.deleteOne(id);
   }
 }
