@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostsDto } from './dto/posts.dto';
 
 @Injectable()
@@ -35,11 +35,10 @@ export class PostsService {
   }
 
   findById(id: number) {
-    const post = this.posts.find((post) => {
-      if (+post.id === +id) {
-        return post;
-      }
-    });
+    const post = this.posts.find((post) => post.id === +id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
     return post;
   }
 

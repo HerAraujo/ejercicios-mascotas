@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CatsDto } from './dto/cats.dto';
+import { UpdateCatDto } from './dto/updateCats.dto';
 
 @Injectable()
 export class CatsService {
@@ -32,11 +33,10 @@ export class CatsService {
   }
 
   findById(id: number) {
-    const cat = this.cats.find((cat) => {
-      if (+cat.id === +id) {
-        return cat;
-      }
-    });
+    const cat = this.cats.find((cat) => cat.id === +id);
+    if (!cat) {
+      throw new NotFoundException(`Cat with id ${id} not found`);
+    }
     return cat;
   }
 
@@ -45,4 +45,20 @@ export class CatsService {
 
     return `${catsDto.name} creado con éxito`;
   }
+
+  /*   updateCat(id: number, updateCatDto: UpdateCatDto) {
+    let catDB = this.findById(id);
+
+    this.cats = this.cats.map((cat) => {
+      if (cat.id === id) {
+        catDB = { ...catDB, ...updateCatDto };
+        return cat;
+      }
+    });
+    return catDB;
+  }
+
+  removeCat(id: number) {
+    this.cats = this.cats.filter((cat) => cat.id !== id);
+  } */
 }

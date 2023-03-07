@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { DogsService } from './dogs.service';
@@ -15,16 +15,16 @@ export class DogsController {
 
   @Get()
   getDogs(): DogsDto[] {
-    return this.dogsService.findAll();
+    return this.dogsService.getAll();
   }
 
   @Get(':id')
-  getDogById(@Param('id', ParseIntPipe) id: number): DogsDto {
-    return this.dogsService.findById(Number(id));
+  getDogById(@Param('id', ParseUUIDPipe) id: string): DogsDto {
+    return this.dogsService.findOne(id);
   }
 
   @Post()
   createDogs(@Body() dogsDto: DogsDto) {
-    return this.dogsService.createDog(dogsDto);
+    return this.dogsService.create(dogsDto);
   }
 }
