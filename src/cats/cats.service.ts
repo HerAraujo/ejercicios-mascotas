@@ -1,36 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCatDto } from './dto/createCat.dto';
 import { UpdateCatDto } from './dto/updateCat.dto';
-import { CatRepository } from './repository/cats.repository';
-import { v4 as uuid } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Cat } from './entity/cat.entity';
+import { Repository } from 'typeorm';
 @Injectable()
 export class CatsService {
-  constructor(private readonly catRepository: CatRepository) {}
+  constructor(
+    @InjectRepository(Cat)
+    private catsRepository: Repository<Cat>,
+  ) {}
 
   getAll() {
-    return this.catRepository.findAll();
+    return this.catsRepository.find();
   }
 
   getOne(id: string) {
-    return this.catRepository.findById(id);
+    return this.catsRepository.findOneBy({ id });
   }
 
-  createCat(createCatDto: CreateCatDto) {
-    const cat = {
-      id: uuid(),
-      ...createCatDto,
-    };
-    this.catRepository.createCat(cat);
-
+  async insert(createCatDto: CreateCatDto) {
+    const cat = this.catsRepository.create(createCatDto);
+    await this.catsRepository.save(cat);
     return cat;
   }
 
-  update(updateCatDTO: UpdateCatDto, id: string) {
-    const catToUpdate = this.getOne(id);
-    return this.catRepository.update(updateCatDTO, id);
+  async update(updateCatDTO: UpdateCatDto, id: string) {
+    const userProduct = {
+      id,
+      ...updateCatDTO,
+    };
+    const product = await this.catsRepository.preload(userProduct);
+    if (product) {
+      return this.catsRepository.save(product);
+    }
+    throw new NotFoundException(`No se encuentra el producto ${id}`);
   }
 
   removeCat(id: string) {
-    return this.catRepository.deleteCat(id);
+    return this.catsRepository.delete(id);
   }
 }

@@ -27,24 +27,24 @@ export class CatsController {
   }
 
   @Get()
-  getCats(): Cat[] {
+  getCats() {
     return this.catsService.getAll();
   }
 
   @Get(':id')
-  getDogById(@Param('id', ParseUUIDPipe) id: string): Cat {
+  getDogById(@Param('id', ParseUUIDPipe) id: string) {
     return this.catsService.getOne(id);
   }
 
   @Post()
   createCats(@Body() catsDto: CreateCatDto) {
-    return this.catsService.createCat(catsDto);
+    return this.catsService.insert(catsDto);
   }
   @Patch(':id')
   updateDog(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCatDto: UpdateCatDto,
-  ): UpdateCatDto {
+  ) {
     return this.catsService.update(updateCatDto, id);
   }
 
