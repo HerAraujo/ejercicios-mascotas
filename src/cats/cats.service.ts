@@ -26,18 +26,22 @@ export class CatsService {
   }
 
   async update(updateCatDTO: UpdateCatDto, id: string) {
-    const userProduct = {
+    const newCat = {
       id,
       ...updateCatDTO,
     };
-    const product = await this.catsRepository.preload(userProduct);
-    if (product) {
-      return this.catsRepository.save(product);
+    const cat = await this.catsRepository.preload(newCat);
+    if (cat) {
+      return this.catsRepository.save(cat);
     }
-    throw new NotFoundException(`No se encuentra el producto ${id}`);
+    throw new NotFoundException(`Cat with id: ${id} not found`);
   }
 
-  removeCat(id: string) {
-    return this.catsRepository.delete(id);
+  async removeCat(id: string) {
+    const cat = await this.catsRepository.findOneBy({ id });
+    if (cat) {
+      return this.catsRepository.remove(cat);
+    }
+    throw new NotFoundException(`Cat ${id} does not exist`);
   }
 }

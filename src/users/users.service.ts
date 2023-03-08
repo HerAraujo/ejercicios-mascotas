@@ -52,14 +52,18 @@ export class UsersService {
       id,
       ...updateUserDTO,
     };
-    const product = await this.userRepository.preload(userToUpdate);
+    const user = await this.userRepository.preload(userToUpdate);
     if (userToUpdate) {
-      return this.userRepository.save(product);
+      return this.userRepository.save(user);
     }
-    throw new NotFoundException(`No se encuentra el producto ${id}`);
+    throw new NotFoundException(`User ${id} not found`);
   }
 
-  removeUser(id: string) {
-    return this.userRepository.delete(id);
+  async removeUser(id: string) {
+    const user = await this.userRepository.findOneBy({ id });
+    if (user) {
+      return this.userRepository.remove(user);
+    }
+    throw new NotFoundException(`User ${id} not found`);
   }
 }
