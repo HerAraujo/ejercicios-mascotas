@@ -1,4 +1,5 @@
 import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { User } from '../../users/entity/users.entity';
 
 export class UpdateDogDto {
   @IsString()
@@ -15,7 +16,6 @@ export class UpdateDogDto {
   age: number;
 
   @IsString()
-  @IsIn(['male', 'female'])
   @IsOptional()
-  gender: string;
+  owner: User;
 }

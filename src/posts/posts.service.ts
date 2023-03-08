@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostsDto } from './dto/posts.dto';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class PostsService {
   private posts: PostsDto[] = [
     {
-      id: 1,
+      id: uuid(),
       title: 'Obama is the new president',
       content: 'alskdflksadjflkajsdfjasldkfjalskjdflasjfdlasfjkasdfaksdmfasfd',
       imageUrl:
@@ -13,7 +14,7 @@ export class PostsService {
       tags: 'Obama',
     },
     {
-      id: 2,
+      id: uuid(),
       title: 'Argentina is the world champion',
       content: 'alskdflksadjflkajsdfjasldkfjalskjdflasjfdlasfjkasdfaksdmfasfd',
       imageUrl:
@@ -21,7 +22,7 @@ export class PostsService {
       tags: 'World cup',
     },
     {
-      id: 3,
+      id: uuid(),
       title: 'Ronaldo broke his leg',
       content: 'alskdflksadjflkajsdfjasldkfjalskjdflasjfdlasfjkasdfaksdmfasfd',
       imageUrl:
@@ -35,7 +36,7 @@ export class PostsService {
   }
 
   findById(id: string) {
-    const post = this.posts.find((post) => post.id === +id);
+    const post = this.posts.find((post) => post.id === id);
     if (!post) {
       throw new NotFoundException(`Post with id ${id} not found`);
     }

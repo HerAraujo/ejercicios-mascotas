@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { DogsService } from './dogs.service';
 import { CreateDogDto } from './dto/createDog.dto';
+import { Dog } from './entity/dog.entity';
 
 @Controller('dogs')
 export class DogsController {
@@ -25,12 +26,12 @@ export class DogsController {
   }
 
   @Get()
-  getDogs(): CreateDogDto[] {
+  getDogs(): Dog[] {
     return this.dogsService.getAll();
   }
 
   @Get(':id')
-  getDogById(@Param('id', ParseUUIDPipe) id: string): CreateDogDto {
+  getDogById(@Param('id', ParseUUIDPipe) id: string): Dog {
     return this.dogsService.findOne(id);
   }
 

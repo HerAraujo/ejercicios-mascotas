@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateCatDto } from './dto/createCat.dto';
 import { UpdateCatDto } from './dto/updateCat.dto';
 import { CatRepository } from './repository/cats.repository';

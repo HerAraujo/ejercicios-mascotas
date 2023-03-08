@@ -1,6 +1,8 @@
+import { Dog } from '../../dogs/entity/dog.entity';
+import { Cat } from '../../cats/entity/cat.entity';
 import {
+  IsArray,
   IsEmail,
-  IsIn,
   IsInt,
   IsOptional,
   IsString,
@@ -17,9 +19,13 @@ export class UsersDto {
   @Min(18)
   age: number;
 
-  @IsString()
-  @IsIn(['male', 'female'])
-  gender: string;
+  @IsArray()
+  @IsOptional()
+  dogs: Dog[];
+
+  @IsArray()
+  @IsOptional()
+  cats: Cat[];
 
   @IsString()
   @IsEmail()

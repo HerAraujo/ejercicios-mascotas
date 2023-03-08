@@ -14,21 +14,18 @@ export class DogRepository {
         name: 'Shagui',
         age: 2,
         breed: 'poodle',
-        gender: 'male',
       },
       {
         id: uuid(),
         name: 'Oso',
         age: 11,
         breed: 'Police',
-        gender: 'male',
       },
       {
         id: uuid(),
         name: 'Rocco',
         age: 4,
         breed: 'alsatian',
-        gender: 'male',
       },
     ];
   }
@@ -61,7 +58,7 @@ export class DogRepository {
         if (dog.id === id) {
           (dog.age = updatedDog.age || dog.age),
             (dog.breed = updatedDog.breed || dog.breed),
-            (dog.gender = updatedDog.gender || dog.gender),
+            (dog.owner = updatedDog.owner || dog.owner),
             (dog.name = updatedDog.name || dog.name);
         }
       });

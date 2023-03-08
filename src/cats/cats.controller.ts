@@ -14,6 +14,7 @@ import {
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/createCat.dto';
 import { UpdateCatDto } from './dto/updateCat.dto';
+import { Cat } from './entity/cat.entity';
 
 @Controller('cats')
 export class CatsController {
@@ -26,12 +27,12 @@ export class CatsController {
   }
 
   @Get()
-  getCats(): CreateCatDto[] {
+  getCats(): Cat[] {
     return this.catsService.getAll();
   }
 
   @Get(':id')
-  getDogById(@Param('id', ParseUUIDPipe) id: string) {
+  getDogById(@Param('id', ParseUUIDPipe) id: string): Cat {
     return this.catsService.getOne(id);
   }
 

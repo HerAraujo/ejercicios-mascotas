@@ -18,21 +18,18 @@ export class CatRepository {
         name: 'Betina',
         age: 2,
         breed: 'Siverian',
-        gender: 'female',
       },
       {
         id: uuid(),
         name: 'Bono',
         age: 11,
         breed: 'Persian',
-        gender: 'male',
       },
       {
         id: uuid(),
         name: 'Hatila',
         age: 4,
         breed: 'Siamese',
-        gender: 'female',
       },
     ];
   }
@@ -62,7 +59,7 @@ export class CatRepository {
         if (cat.id === id) {
           (cat.age = updatedCat.age || cat.age),
             (cat.breed = updatedCat.breed || cat.breed),
-            (cat.gender = updatedCat.gender || cat.gender),
+            (cat.owner = updatedCat.owner || cat.owner),
             (cat.name = updatedCat.name || cat.name);
         }
       });

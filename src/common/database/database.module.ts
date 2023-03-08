@@ -4,18 +4,19 @@ import { Cat } from 'src/cats/entity/cat.entity';
 import { Dog } from 'src/dogs/entity/dog.entity';
 import { Post } from 'src/posts/entity/post.entity';
 import { User } from 'src/users/entity/users.entity';
+import 'reflect-metadata';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
-        type: 'mysql',
+        type: 'postgres',
         host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'mascotapp',
+        port: 5432,
+        username: 'postgres',
+        password: 'password',
+        database: 'ejercicio-animales',
         entities: [User, Dog, Cat, Post],
         synchronize: true,
         keepConnectionAlive: true,

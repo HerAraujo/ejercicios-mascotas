@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { PostsDto } from './dto/posts.dto';
@@ -19,8 +19,8 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostById(@Param('id', ParseIntPipe) id: string): PostsDto {
-    return this.postsService.findById(Number(id));
+  getPostById(@Param('id', ParseUUIDPipe) id: string): PostsDto {
+    return this.postsService.findById(id);
   }
   @Post()
   createPosts(@Body() postsDto: PostsDto) {
