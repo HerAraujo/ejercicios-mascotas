@@ -19,13 +19,13 @@ export class CatsService {
     return this.catsRepository.findOneBy({ id });
   }
 
-  async insert(createCatDto: CreateCatDto) {
+  async insert(createCatDto: CreateCatDto): Promise<Cat> {
     const cat = this.catsRepository.create(createCatDto);
     await this.catsRepository.save(cat);
     return cat;
   }
 
-  async update(updateCatDTO: UpdateCatDto, id: string) {
+  async update(updateCatDTO: UpdateCatDto, id: string): Promise<Cat> {
     const newCat = {
       id,
       ...updateCatDTO,

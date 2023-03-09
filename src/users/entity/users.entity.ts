@@ -16,7 +16,7 @@ export class User {
   dogs?: Dog[];
 
   @OneToMany(() => Cat, (cat) => cat.id)
-  cats?: Dog[];
+  cats?: Cat[];
 
   @Column()
   email: string;
